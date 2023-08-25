@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: ac51493d3869
+Revision ID: fb59305d414b
 Revises: 
-Create Date: 2023-08-24 17:11:44.452423
+Create Date: 2023-08-24 22:33:58.821218
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ac51493d3869'
+revision = 'fb59305d414b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,37 +22,37 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('image', sa.String(), nullable=True),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_artists'))
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('playlists',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_playlists'))
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('songs',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(), nullable=True),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_songs'))
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('password', sa.String(), nullable=True),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_users'))
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('playlist_artist',
     sa.Column('playlist_id', sa.Integer(), nullable=False),
     sa.Column('artist_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['artist_id'], ['artists.id'], name=op.f('fk_playlist_artist_artist_id_artists')),
     sa.ForeignKeyConstraint(['playlist_id'], ['playlists.id'], name=op.f('fk_playlist_artist_playlist_id_playlists')),
-    sa.PrimaryKeyConstraint('playlist_id', 'artist_id', name=op.f('pk_playlist_artist'))
+    sa.PrimaryKeyConstraint('playlist_id', 'artist_id')
     )
     op.create_table('playlist_song',
     sa.Column('playlist_id', sa.Integer(), nullable=False),
     sa.Column('song_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['playlist_id'], ['playlists.id'], name=op.f('fk_playlist_song_playlist_id_playlists')),
     sa.ForeignKeyConstraint(['song_id'], ['songs.id'], name=op.f('fk_playlist_song_song_id_songs')),
-    sa.PrimaryKeyConstraint('playlist_id', 'song_id', name=op.f('pk_playlist_song'))
+    sa.PrimaryKeyConstraint('playlist_id', 'song_id')
     )
     # ### end Alembic commands ###
 

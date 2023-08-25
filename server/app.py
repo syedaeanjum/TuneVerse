@@ -4,13 +4,6 @@ from flask_migrate import Migrate
 from flask_restful import Resource
 from config import app, api, db
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db.init_app(app)
-migrate = Migrate(app, db)
-api = Api(app)
 
 def create_app():
     return app
@@ -47,23 +40,45 @@ api.add_resource(Users, '/users')
 
 
 
-@app.route('/login', methods=['POST'])
-def login():
-    data = request.json
-    username = data['name']
-    password = data['password']
+class Login (Resource):
+    def post ( self ):
+        data = request.json
+        username = data['name']
+        password = data['password']
 
-    user = User.query.filter_by(name=username).first()
-    if not user:
-        return make_response({'error': 'user not found'}, 404)
+        user = User.query.filter_by(name=username).first()
+        if not user:
+            return make_response({'error': 'user not found'}, 404)
 
-    if not user.authenticate(password):
-        return make_response({'error': 'wrong password'}, 401)
+        if not user.authenticate(password):
+            return make_response({'error': 'wrong password'}, 401)
 
-    # You can use sessions, tokens, or cookies here for user authentication
-    # For now, let's just return a success message
-    return make_response({'message': 'Login successful'}, 200)
+        # You can use sessions, tokens, or cookies here for user authentication
+        # For now, let's just return a success message
+        return make_response({'message': 'Login successful'}, 200)
 
+
+api.add_resource(Login, '/loginpage')
+
+class Signup (Resource):
+    def post ( self ):
+        data = request.json
+        username = data['name']
+        password = data['password']
+
+        user = User.query.filter_by(name=username).first()
+        if not user:
+            return make_response({'error': 'user not found'}, 404)
+
+        if not user.authenticate(password):
+            return make_response({'error': 'wrong password'}, 401)
+
+        # You can use sessions, tokens, or cookies here for user authentication
+        # For now, let's just return a success message
+        return make_response({'message': 'Signup successful'}, 200)
+
+
+api.add_resource(Login, '/loginpage')
 
     ############ writing fetchs##
 
@@ -89,7 +104,7 @@ api.add_resource(FetchArtistDataResource, '/artists')
 
 class UpdatePlaylistResource(Resource):
     def post(self, playlist_name):
-        playlist = Playlist.query.filter_by(name=playlist_name).first()
+        playlist = Playlist.query.filter_by(name=playlist_name).all()
 
         if not playlist:
             return {'message': 'Playlist not found'}, 404
@@ -102,7 +117,7 @@ class UpdatePlaylistResource(Resource):
         db.session.commit()
         return {'message': 'Playlist updated successfully'}, 200
 
-api.add_resource(UpdatePlaylistResource, '/api/playlists/<playlist_name>/update')
+api.add_resource(UpdatePlaylistResource, '/playlists/<playlist_name>/update')
 
 
 

@@ -1,6 +1,4 @@
-// import "./Login.css";
 import React, { useState } from 'react';
-// import ./LoginPage.css;
 
 const LoginPage = () => {
     const [userData, setUserData] = useState({
@@ -25,7 +23,7 @@ const LoginPage = () => {
             password: userData.password
         };
 
-        fetch('http://127.0.0.1:5555/login', {
+        fetch('http://127.0.0.1:5555/loginPage', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formObj)
@@ -59,7 +57,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div>
+        <div className='login-form'>
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div>

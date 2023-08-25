@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./Playlist.css";
+import "../css/Playlist.css";
 
 const Playlist = () => {
   const [playlistName, setPlaylistName] = useState("");

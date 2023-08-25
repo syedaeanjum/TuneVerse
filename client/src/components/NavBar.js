@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "./NavBar.css";
+import "../css/NavBar.css";
 
 const NavBar = () => {
   const linkStyles = {
@@ -26,8 +26,8 @@ const NavBar = () => {
       <NavLink to="/playlists" style={linkStyles}>
         Playlists
       </NavLink>
-      <NavLink to="/loginPage" style={linkStyles}>
-        Login {/* This link will take you to the login page */}
+      <NavLink to="/account" style={linkStyles}>
+        Account {/* This link will take you to the login page */}
       </NavLink>
     </nav>
   );

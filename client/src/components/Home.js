@@ -1,5 +1,5 @@
 import React from "react";
-import "./Home.css"; // Import the CSS file
+import "../css/Home.css"; // Import the CSS file
 
 const Home = () => {
   const cardData = [

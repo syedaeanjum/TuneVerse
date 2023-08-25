@@ -1,5 +1,5 @@
 import React from "react";
-import "./Songs.css";
+import "../css/Songs.css";
 
 const Songs = () => {
   const cardData = [

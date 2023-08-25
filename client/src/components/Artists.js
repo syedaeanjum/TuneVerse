@@ -1,5 +1,5 @@
 import React from "react";
-import "./Artist.css";
+import "../css/Artist.css";
 
 const Artists = () => {
   const cardData = [
