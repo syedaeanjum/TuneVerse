@@ -1,0 +1,60 @@
+from app import create_app
+from models import db, Artist, Song, Playlist, User
+
+app = create_app()
+app.app_context().push()
+
+def seed_data():
+    # Create test artists
+    artist1 = Artist(name="Artist 1", image = 'https://media.pitchfork.com/photos/642f39d907a8267dac4c2fd0/1:1/w_1400,h_1400,c_limit/Drake.jpg' )
+    artist2 = Artist(name="Artist 2")
+    artist3 = Artist(name="Artist 3")
+    
+    
+    db.session.add_all([artist1, artist2, artist3])
+    db.session.commit()
+
+    # Create test songs
+    song1 = Song(title="Song 1")
+    song2 = Song(title="Song 2")
+    song3 = Song(title="Song 3")
+    
+
+    db.session.add_all([song1, song2, song3])
+    db.session.commit()
+
+    # Create test playlists
+    playlist1 = Playlist(name="Playlist 1")
+    playlist2 = Playlist(name="Playlist 2")
+    playlist3 = Playlist(name="Playlist 3")
+
+    playlist1.artists.extend([artist1, artist2])
+    playlist1.songs.extend([song1, song2])
+
+    playlist2.artists.extend([artist2, artist3])
+    playlist2.songs.extend([song2, song3])
+
+    playlist3.artists.extend([artist1, artist3])
+    playlist3.songs.extend([song1, song3])
+
+    
+    db.session.add_all([playlist1, playlist2, playlist3])
+    db.session.commit()
+
+    # Create test users
+    user1 = User(name="User 1", password="password1")
+    user2 = User(name="User 2", password="password2")
+    user3 = User(name="User 3", password="password3")
+
+  
+
+if __name__ == "__main__":
+    seed_data()
+
+    Artist.query.delete()
+    Song.query.delete()
+    Playlist.query.delete()
+
+    User.query.delete()
+    db.session.add_all([user1, user2, user3])
+    db.session.commit()

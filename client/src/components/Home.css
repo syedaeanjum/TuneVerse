@@ -1,0 +1,38 @@
+/* Home.css */
+body {
+  background-color: white; /* Set the background color of the entire page */
+  margin: 0; /* Reset default margin */
+  padding: 0; /* Reset default padding */
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: transparent; /* Remove background color from cards container */
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+  background-color: white; /* Set card background color */
+}
+
+.card img {
+  max-width: 100%;
+  height: auto;
+}
+
+.card h3 {
+  margin: 10px 0;
+}
+
+.card a {
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
