@@ -1,48 +1,90 @@
-import React from "react";
+// import "../css/Artist.css";
+// import { fetchApi } from "../utils";
+
+//   const [name, setName] = useState('');
+//   const [image, setImage] = useState('');
+
+//   const handleArtist = async () =>{
+//     try{
+//       const response=await fetchApi('/artists', {
+//         method:'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({name, image}),
+//       }),
+
+//       if(response.status===200){
+//         const data = await response.json(); 
+//         setName(`/artists/${data.artist_id}`);
+//         setImage (`/artists/${data.artist_image}`);
+//       } else (response.status === 404)
+//   }
+
+
+//   return()
+// };
+
+// export default Artists;
+
+
+import React, { useState, useEffect } from 'react';
 import "../css/Artist.css";
 
 const Artists = () => {
-  const cardData = [
-    {
-      imageSrc: "artist1.jpg",
-      artistName: "Artist 1",
-      link: "/artists/1",
-    },
-    {
-      imageSrc: "artist2.jpg",
-      artistName: "Artist 2",
-      link: "/artists/2",
-    },
-    {
-      imageSrc: "artist3.jpg",
-      artistName: "Artist 3",
-      link: "/artists/3",
-    },
-    {
-      imageSrc: "artist4.jpg",
-      artistName: "Artist 4",
-      link: "/artists/4",
-    },
-    {
-      imageSrc: "artist5.jpg",
-      artistName: "Artist 5",
-      link: "/artists/5",
-    },
-    
-  ];
+  const [name, setName] = useState('');
+  const [image, setImage] = useState('');
+  const [artists, setArtists] = useState([]);
+
+  const handleArtist = async () => {
+    try {
+      const response = await fetch('/artists', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, image }),
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        setName(`/artists/${data.artist_id}`);
+        setImage(`/artists/${data.artist_image}`);
+      } else if (response.status === 404) {
+        // Handle 404 error if needed
+      }
+    } catch (error) {
+      console.error("Error fetching artist:", error);
+    }
+  }
+
+  useEffect(() => {
+    // Fetch artists data from the API endpoint
+    const fetchArtistsData = async () => {
+      try {
+        const response = await fetch('/artists');
+        if (response.status === 200) {
+          const data = await response.json();
+          setArtists(data); // Assuming the data is an array of artists
+        }
+      } catch (error) {
+        console.error("Error fetching artists:", error);
+      }
+    };
+    fetchArtistsData();
+  }, []);
 
   return (
     <div className="artists-container">
       <h1>Artists</h1>
-      <div className="artists-list">
-        {cardData.map((card, index) => (
-          <div key={index} className="artist-card">
-            <img src={card.imageSrc} alt={card.artistName} />
-            <h3>{card.artistName}</h3>
-            <a href={card.link}>Profile</a>
-          </div>
+      <ul>
+        {artists.map(artist => (
+          <li key={artist.id}>
+            <img src={artist.image} alt={artist.name} />
+            <p>{artist.name}</p>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

@@ -2,7 +2,7 @@
   .playlist-container {
     text-align: center;
     padding: 20px;
-    color: white; /* Set text color to white */
+    color: black; /* Set text color to white */
     position: relative; /* Add position relative for overlay */
   }
   

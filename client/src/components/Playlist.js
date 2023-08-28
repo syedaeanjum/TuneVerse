@@ -9,18 +9,19 @@ const Playlist = () => {
   const [playlistSongs, setPlaylistSongs] = useState([]); // Array to store playlist songs
   const [createdPlaylists, setCreatedPlaylists] = useState([]);
 
+
    // Load playlists from local storage on component mount
-   useEffect(() => {
-    const storedPlaylists = localStorage.getItem("userPlaylists");
-    if (storedPlaylists) {
-      setCreatedPlaylists(JSON.parse(storedPlaylists));
-    }
-  }, []);
+  //  useEffect(() => {
+  //   const storedPlaylists = localStorage.getItem("userPlaylists");
+  //   if (storedPlaylists) {
+  //     setCreatedPlaylists(JSON.parse(storedPlaylists));
+  //   }
+  // }, []);
 
   // Save playlists to local storage whenever they change
-  useEffect(() => {
-    localStorage.setItem("userPlaylists", JSON.stringify(createdPlaylists));
-  }, [createdPlaylists]);
+  // useEffect(() => {
+  //   localStorage.setItem("userPlaylists", JSON.stringify(createdPlaylists));
+  // }, [createdPlaylists]);
 
   const premadePlaylists = [
     { name: "Chill Vibes", description: "Relaxing tunes for a calm day." },
@@ -76,6 +77,14 @@ const Playlist = () => {
       console.error("Error while modifying playlist:", error);
     }
   };
+
+
+  const [playlists, setPlaylists] = useState ([])
+useEffect(() => {
+  fetch ('/playlists')
+  .then (r=>r.json())
+  .then (playlists => setPlaylists(playlists))
+},[])
 
   return (
     <div className="playlist-container">
