@@ -16,5 +16,53 @@
     border-radius: 4px;
     margin: 0 18px 6px;
   }
+
+  body {
+    background-color: black;
+    color: white; /* Use white text for better contrast */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .navbar {
+    background-color: #333; /* Dark background color for navbar */
+    overflow: hidden;
+  }
+  
+  .navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  .navbar a:hover {
+    background-color: #555; /* Darken the button on hover */
+  }
+  
+  /* 3D Button styling */
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    background-color: #4CAF50; /* Green background color for buttons */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #45a049; /* Darken the button on hover */
+    transform: translateY(-3px); /* Add a slight lift effect */
+  }
+  
+  .button:active {
+    background-color: #357835; /* Darken the button when clicked */
+    transform: translateY(1px); /* Add a slight press effect */
+  }
   
   

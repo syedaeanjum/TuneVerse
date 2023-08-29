@@ -1,18 +1,30 @@
 .songs-container {
-    padding: 20px;
-  }
-  
-  .songs-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  
-  .song-card {
-    border: 1px solid #ccc;
-    padding: 15px;
-    text-align: center;
-    width: calc(33.33% - 20px); /* Adjust width as needed */
-    background-color: white;
-  }
-  
+  padding: 20px;
+  color: black;
+  font-family: "Circular", Arial, sans-serif;
+}
+
+.songs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.song-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  text-align: center;
+  width: calc(33.33% - 20px);
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  font-family: "Circular", Arial, sans-serif;
+}
+
+.song-card:hover {
+  box-shadow: 0 6px 10px rgba(0, 128, 0, 0.5);
+  transform: translateY(-3px);
+  font-family: "Circular", Arial, sans-serif;
+}
+
+

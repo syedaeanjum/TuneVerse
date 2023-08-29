@@ -19,6 +19,8 @@ class Login(Resource):
             return {'user_id': user.id}, 200
         else:
             return {'message': 'Invalid username or password'}, 401
+        
+
 
 class Signup (Resource):
     def post ( self ):
@@ -64,7 +66,7 @@ class SongsByID (Resource):
     def get(self, id):
         song = Song.query.get(id)
         if not song:
-            return make_response() ({'message': 'not found'}, 404 )
+            return make_response({'message': 'not found'}, 404 )
         return make_response (song.to_dict(), 200 )
 
 class Artists(Resource):
@@ -77,21 +79,56 @@ class ArtistsByID (Resource):
     def get(self, id):
         artist = Artist.query.get(id)
         if not artist:
-            return make_response() ({'message': 'not found'}, 404 )
+            return make_response({'message': 'not found'}, 404 )
         return make_response (artist.to_dict(), 200 )
     
 class Playlists(Resource):
     def get(self):
-        playlists = Playlist.query.all()
-        playlist_names= [playlist.to_dict() for playlist in playlists]        
-        return make_response (playlist_names, 200 )
+        playlists = [p.to_dict() for p in Playlist.query.all()]
+        
+        return make_response (playlists, 200)
+    
+    def post (self):
+        data = request.get_json()
+        try:
+            newPlaylist = Playlist(name = data['name'])
+        except ValueError as e : 
+            return make_response({'error' : [str(e)]}, 422)
+        
+        db.session.add(newPlaylist)
+        db.session.commit()
+        return make_response (newPlaylist.to_dict(),201)
+    
 
+
+        
 class PlaylistByID (Resource):
     def get(self, id):
         playlist = Playlist.query.get(id)
         if not playlist:
-            return make_response() ({'message': 'not found'}, 404 )
+            return make_response({'message': 'not found'}, 404 )
         return make_response (playlist.to_dict(), 200 )
+    
+    def delete (self, id):
+        playlist = Playlist.query.get_or_404(id)
+    
+        db.session.delete(playlist)
+        db.session.commit()
+    
+        return make_response({'message': 'Playlist deleted successfully'}, 204)
+    
+    def patch(self, id):
+        playlist = Playlist.query.get_or_404(id)
+        data = request.get_json()
+        
+        for attr in data:
+            setattr(playlist, attr, data[attr])
+            
+        db.session.commit()
+        
+        playlist_dict = playlist.to_dict()
+
+        return make_response (playlist_dict, 202)
 
 class UpdatePlaylist(Resource):
     def post(self, playlist_name):
@@ -107,7 +144,7 @@ class UpdatePlaylist(Resource):
 
         db.session.commit()
         return {'message': 'Playlist updated successfully'}, 200
-
+    
 
 api.add_resource(Login, '/login')
 api.add_resource(Signup, '/signup')
@@ -120,6 +157,7 @@ api.add_resource(ArtistsByID, '/artists/<int:id>')
 api.add_resource(Playlists, '/playlists')
 api.add_resource(PlaylistByID, '/playlists/<int:id>')
 api.add_resource(UpdatePlaylist, '/playlists/<playlist_name>/update')
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -62,8 +62,9 @@ import {useNavigate} from 'react-router-dom';
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const [loggedIn, setLoggedIn] = useState('false');
+    const [loggedIn, setLoggedIn] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    console.log (loggedIn)
 
     const handleLogin = async (e) => {
         e.preventDefault()

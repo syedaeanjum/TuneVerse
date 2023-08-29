@@ -2,31 +2,37 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../css/Playlist.css";
 
+
 const Playlist = () => {
   const [playlistName, setPlaylistName] = useState("");
   const [artistName, setArtistName] = useState("");
   const [songName, setSongName] = useState("");
-  const [playlistSongs, setPlaylistSongs] = useState([]); // Array to store playlist songs
+  const [playlistSongs, setPlaylistSongs] = useState([]);
   const [createdPlaylists, setCreatedPlaylists] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
+  const [playlistId, setPlaylistId] = useState ("")
+  const [detailId, setDetailId] = useState ("")
+  const [showForm, setShowForm] = useState(false)
+  const [newPlaylistName, setNewPlaylistName] = useState ('')
 
 
-   // Load playlists from local storage on component mount
-  //  useEffect(() => {
-  //   const storedPlaylists = localStorage.getItem("userPlaylists");
-  //   if (storedPlaylists) {
-  //     setCreatedPlaylists(JSON.parse(storedPlaylists));
-  //   }
-  // }, []);
+  const handleDetail= (detailedPlaylist) =>{
+    setDetailId(detailedPlaylist)
+  }
 
-  // Save playlists to local storage whenever they change
-  // useEffect(() => {
-  //   localStorage.setItem("userPlaylists", JSON.stringify(createdPlaylists));
-  // }, [createdPlaylists]);
+  console.log (detailId)
+  // const premadePlaylists = [
+  //   { name: "Chill Vibes", description: "Relaxing tunes for a calm day." },
+  //   { name: "Upbeat Jams", description: "Energetic tracks to lift your spirits." },
+  // ];
 
-  const premadePlaylists = [
-    { name: "Chill Vibes", description: "Relaxing tunes for a calm day." },
-    { name: "Upbeat Jams", description: "Energetic tracks to lift your spirits." },
-  ];
+  useEffect(() => {
+    fetch('/playlists')
+      .then(r => r.json())
+      .then(playlists => setPlaylists(playlists))
+      .catch(error => console.error("Error while fetching playlists:", error));
+  }, []);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,34 +49,49 @@ const Playlist = () => {
 
   const handlePlaylistSubmit = (e) => {
     e.preventDefault();
-    if (playlistName.trim() !== "" && playlistSongs.length > 0) {
+    if (playlistName.trim() !== "") {
       const newPlaylist = {
         name: playlistName,
         songs: [...playlistSongs],
       };
-      setCreatedPlaylists([...createdPlaylists, newPlaylist]);
-      setPlaylistName("");
-      setArtistName("");
-      setSongName("");
-      setPlaylistSongs([]);
+      fetch ('/playlists',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+        }, 
+        body : JSON.stringify(newPlaylist),
+      })
+      .then (r => r.json())
+      .then (p => {
+        console.log(p)
+        setCreatedPlaylists([...createdPlaylists, newPlaylist]);
+        setPlaylistName("");
+        setArtistName("");
+        setSongName("");
+        setPlaylistSongs([]);
+      })
     }
-  };
-
+  }
+  const handleShowForm= () => {
+    setShowForm(!showForm);
+  }
   const handlePlaylistModify = async (modifiedPlaylist) => {
     try {
-      const response = await fetch(`/api/playlists/${modifiedPlaylist.name}/update`, {
-        method: "POST",
+      const updatedData = {
+        name: newPlaylistName
+      };
+
+      const response = await fetch(`/playlists`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(modifiedPlaylist),
+        body: JSON.stringify(updatedData),
       });
 
       if (response.ok) {
-        // Handle successful update
-        // You might want to update the local state or show a success message
+        console.log("Playlist modified successfully");
       } else {
-        // Handle error response
         console.error("Failed to modify playlist");
       }
     } catch (error) {
@@ -79,28 +100,86 @@ const Playlist = () => {
   };
 
 
-  const [playlists, setPlaylists] = useState ([])
-useEffect(() => {
-  fetch ('/playlists')
-  .then (r=>r.json())
-  .then (playlists => setPlaylists(playlists))
-},[])
 
-  return (
-    <div className="playlist-container">
-      <h1>Playlists</h1>
-      <div className="premade-playlists">
-        {premadePlaylists.map((playlist, index) => (
-          <div key={index} className="playlist-card">
-            <h3>{playlist.name}</h3>
-            <p>{playlist.description}</p>
-            <Link to={`/playlists/${playlist.name.toLowerCase().replace(/\s+/g, "-")}`}>
-              <button>Access Playlist</button>
-            </Link>
+  const deletePlaylist = async (playlistId) => {
+    
+    try {
+      const response = await fetch(`/playlists/${playlistId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        console.log("Playlist deleted successfully");
+        setPlaylists(playlists.filter(playlist => playlist.id !== playlistId))
+      } else {
+        console.log(playlistId)
+        console.error("Failed to delete playlist");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+
+return (
+  <div className="playlist-container">
+    <h1>Playlists</h1>
+    <div className="premade-playlists">
+      {playlists.map((playlist, index) => (
+        <div key={index} className="playlist-card">
+          <h3>{playlist.name}</h3>
+          <p>{playlist.description}</p>
+          { playlist.id === detailId ? 
+          <div> 
+          <ul>
+          {createdPlaylists.map((playlist, index) => (
+            <li key={index}>
+              {playlist.name}
+              <ul>
+                {playlist.songs.map((song, index) => (
+                  <li key={index}>
+                    {song.artist} - {song.song}
+                  </li>
+                ))}
+              </ul>
+          </li>  
+          ))}
+        </ul> 
+          <button onClick={() => handleDetail('')}>
+          Less info</button>
+          <button onClick={() => deletePlaylist(playlist.id)}>
+              Delete Playlist
+            </button>
           </div>
-        ))}
-      </div>
-      <div className="create-playlist-form">
+          :
+          <button onClick={() => handleDetail(playlist.id)}> More Info </button>
+          }
+          
+          <Link to={`/playlists/${playlist.name.toLowerCase().replace(/\s+/g, "-")}`}>
+            <button>Access Playlist</button>
+          </Link>
+          <button onClick={handleShowForm}>
+          Modify Playlist
+        </button>
+        {
+      //     showForm? (
+      //     <form onSubmit={handleSubmit}>
+      //     <input
+      //       type="text"
+      //       placeholder="Change Playlist Name"
+      //       value={newPlaylistName}
+      //       onChange={(e) => setNewPlaylistName(e.target.value)}
+      //     />
+      //     <button type="submit">Save</button>
+      //   </form>
+      // ) : null
+    }
+        </div>
+      ))}
+    </div>
+    <div className="create-playlist-form">
         <h2>Create Your Own Playlist</h2>
         <form onSubmit={handleSubmit}>
           <input
@@ -130,7 +209,7 @@ useEffect(() => {
               <ul>
                 {playlistSongs.map((song, index) => (
                   <li key={index}>
-                    {song.artist} - {song.song}
+                    {song.artist} - {song.title}
                   </li>
                 ))}
               </ul>
@@ -140,27 +219,25 @@ useEffect(() => {
         </form>
       </div>
       <div className="user-playlists">
-        <h2>Your Created Playlists</h2>
-        <ul>
-          {createdPlaylists.map((playlist, index) => (
-            <li key={index}>
-              {playlist.name}
-              <ul>
-                {playlist.songs.map((song, index) => (
-                  <li key={index}>
-                  {song.artist} - {song.song} 
-                  </li>
-                ))}
-              </ul>
-              <button onClick={() => handlePlaylistModify(playlist)}>
-          Modify Playlist
-        </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <h2>Your Created Playlists</h2>
+      <ul>
+        {createdPlaylists.map((playlist, index) => (
+          <li key={index}>
+            {playlist.name}
+            <ul>
+              {playlist.songs.map((song, index) => (
+                <li key={index}>
+                  {song.artist} - {song.song}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </div>
-  );
+  </div>
+);
 };
+
 
 export default Playlist;

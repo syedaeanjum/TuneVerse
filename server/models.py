@@ -32,7 +32,7 @@ class Playlist(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-     # Intermediate table for many-to-many relationship with Artist
+    # Intermediate table for many-to-many relationship with Artist
     artists = db.relationship('Artist', secondary='playlist_artist', back_populates='playlists')
     
     # Intermediate table for many-to-many relationship with Song
@@ -50,6 +50,12 @@ class Playlist(db.Model, SerializerMixin):
     db.Column('playlist_id', db.Integer, db.ForeignKey('playlists.id'), primary_key=True),
     db.Column('song_id', db.Integer, db.ForeignKey('songs.id'), primary_key=True)
     )
+    
+    @validates('playlist.name')
+    def validate_name(self, key, name):
+        if len(name) < 5:
+            raise ValueError("Playlist name must be at least 5 characters.")
+        return name
 
 
 class User( db.Model, SerializerMixin ):
@@ -71,5 +77,15 @@ class User( db.Model, SerializerMixin ):
     
     def authenticate (self, password_string):
         return bcrypt.check_password_hash(self.password_hash, password_string.encode('utf-8'))
+    
+    
+    # @staticmethod
+    # def validate_login(username, password):
+    #     if len(username) < 4 or len(password) < 4:
+    #         return False, "Username and password must be at least 4 characters long."
         
+    #     user = User.query.filter_by(name=username).first()
+    #     if user and user.authenticate(password):
+    #         return True, "Login successful."
         
+    #     return False, "Invalid username or password."
