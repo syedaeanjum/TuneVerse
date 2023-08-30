@@ -5,8 +5,6 @@ import Home from "./Home";
 import Songs from "./Songs";
 import Artists from "./Artists";
 import Playlist from "./Playlist";
-// import Login from './Login';
-// import Signup from './Signup';
 import LoginPage from './LoginPage'
 import { UserContext } from "../context/user";
 

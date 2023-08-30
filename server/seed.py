@@ -43,6 +43,7 @@ def seed_data():
         user1 = User(name="User 1", password_hash="password1")
         user2 = User(name="User 2", password_hash="password2")
         user3 = User(name="User 3", password_hash="password3")
+        user4 = User(name ="4444", password_hash="4444")
 
         Artist.query.delete()
         Song.query.delete()
@@ -58,7 +59,7 @@ def seed_data():
         db.session.add_all([playlist1, playlist2, playlist3])
         db.session.commit()
 
-        db.session.add_all([user1, user2, user3])
+        db.session.add_all([user1, user2, user3, user4])
         db.session.commit()
 
 

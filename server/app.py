@@ -90,6 +90,10 @@ class Playlists(Resource):
     
     def post (self):
         data = request.get_json()
+        name = data.get('name')
+        if len(name) < 5:
+            return ("Playlist name must be at least 5 characters.")
+
         try:
             newPlaylist = Playlist(name = data['name'])
         except ValueError as e : 
