@@ -66,7 +66,7 @@ const Playlist = () => {
         .then(r => r.json())
         .then(p => {
           console.log(p)
-          window.confirm ('Playlist successfully created.')
+          //window.confirm ('Playlist successfully created.')
           setCreatedPlaylists([...createdPlaylists, newPlaylist]);
           setPlaylistName("");
           setArtistName("");
