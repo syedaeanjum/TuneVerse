@@ -26,9 +26,6 @@ const NavBar = () => {
       <NavLink to="/playlists" style={linkStyles}>
         Playlists
       </NavLink>
-      <NavLink to="/account" style={linkStyles}>
-        Account {/* This link will take you to the login page */}
-      </NavLink>
     </nav>
   );
 };

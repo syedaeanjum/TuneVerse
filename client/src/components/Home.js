@@ -31,7 +31,7 @@ const Home = () => {
   ];
 
   return (
-    <div>
+    <div class="center-content">
       <h1>Hot Tunes Right Now!</h1>
       <div className="card-container">
         {cardData.map((card, index) => (

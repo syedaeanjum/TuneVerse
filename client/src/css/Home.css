@@ -1,16 +1,22 @@
+.center-content {
+  text-align: center;
+}
 .card-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; 
+  align-items: center; 
   flex-wrap: wrap;
   gap: 20px;
-  background-color: transparent; /* Remove background color from cards container */
+  background-color: transparent;
 }
 
 .card {
+  flex: 1; 
+  max-width: 300px; 
   border: 1px solid #ccc;
   padding: 10px;
   text-align: center;
-  background-color: white; /* Set card background color */
+  background-color: white;
 }
 
 .card img {
@@ -28,4 +34,4 @@
   color: white;
   padding: 5px 10px;
   border-radius: 4px;
-}
+} 
