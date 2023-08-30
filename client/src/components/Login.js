@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useHistory} from 'react-router-dom';
 
     const LoginPage = () => {
 
@@ -25,7 +25,8 @@ import {useNavigate} from 'react-router-dom';
             if (response.status === 200) {
                 const data = await response.json();
                 setLoggedIn(true);
-                navigate(`/home`);
+                History.push('/home')
+                // navigate(`/home`);
             } else {
                 setErrorMessage('Invalid username or password.');
             }

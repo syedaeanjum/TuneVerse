@@ -1,32 +1,3 @@
-// import "../css/Artist.css";
-// import { fetchApi } from "../utils";
-
-//   const [name, setName] = useState('');
-//   const [image, setImage] = useState('');
-
-//   const handleArtist = async () =>{
-//     try{
-//       const response=await fetchApi('/artists', {
-//         method:'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({name, image}),
-//       }),
-
-//       if(response.status===200){
-//         const data = await response.json(); 
-//         setName(`/artists/${data.artist_id}`);
-//         setImage (`/artists/${data.artist_image}`);
-//       } else (response.status === 404)
-//   }
-
-
-//   return()
-// };
-
-// export default Artists;
-
 
 import React, { useState, useEffect } from 'react';
 import "../css/Artist.css";

@@ -28,7 +28,7 @@ function App() {
 
         <Router>
           <Routes>
-            <Route path="/" element={<Navigate to="/" />} />
+            <Route exact path="/" element={<Navigate to="/loginpage" />} />
             <Route path="/loginpage" element={<LoginPage />}  />
             <Route path="/*" element={<LoginPage />} />
           </Routes>
@@ -44,8 +44,7 @@ function App() {
           <Route path="/songs" element={<Songs />} />
           <Route path="/artists" element={<Artists />} />
           <Route path="/playlists" element={<Playlist />} />
-          {/* You can also set a default route */}
-          <Route path="/" element={<Navigate to="/home" />} />
+          <Route exact path="/" element={<Navigate to="/home" />} />
         </Routes>
       </Router>
       }

@@ -19,13 +19,13 @@
 
   body {
     background-color: black;
-    color: white; /* Use white text for better contrast */
+    color: white; 
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
   }
   .navbar {
-    background-color: #333; /* Dark background color for navbar */
+    background-color: #333; 
     overflow: hidden;
   }
   
@@ -38,16 +38,17 @@
     text-decoration: none;
   }
   
-  .navbar a:hover {
-    background-color: #555; /* Darken the button on hover */
-  }
+  .nav-buttons:hover {
+  background-color: #555;
+  transform: translateY(-3px);
+}
   
   /* 3D Button styling */
   .button {
     display: inline-block;
     padding: 10px 20px;
     border: none;
-    background-color: #4CAF50; /* Green background color for buttons */
+    background-color: #4CAF50; 
     color: white;
     text-align: center;
     text-decoration: none;
@@ -56,13 +57,13 @@
   }
   
   .button:hover {
-    background-color: #45a049; /* Darken the button on hover */
-    transform: translateY(-3px); /* Add a slight lift effect */
+    background-color: #45a049; 
+    transform: translateY(-3px); 
   }
   
   .button:active {
-    background-color: #357835; /* Darken the button when clicked */
-    transform: translateY(1px); /* Add a slight press effect */
+    background-color: #357835; 
+    transform: translateY(1px); 
   }
   
   

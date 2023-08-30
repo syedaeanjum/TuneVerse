@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useContext} from "react";
 import { NavLink } from "react-router-dom";
+import { UserContext } from "../context/user"
 import "../css/NavBar.css";
 
 const NavBar = () => {
@@ -12,7 +13,17 @@ const NavBar = () => {
     background: "black",
   };
 
+
+  const { setUser } = useContext(UserContext)
+  const handleSignOut = (e) => {
+    fetch("/logout", {
+      method: "DELETE",
+  })
+  setUser(null)
+  }
+
   return (
+    <div>
     <nav style={{ background: "lightgray" }}>
       <NavLink to="/" exact style={linkStyles}>
         Home
@@ -26,7 +37,13 @@ const NavBar = () => {
       <NavLink to="/playlists" style={linkStyles}>
         Playlists
       </NavLink>
+      <button onClick={handleSignOut}> Sign Out
+    </button>
+    
     </nav>
+    
+    </div>
+    
   );
 };
 
