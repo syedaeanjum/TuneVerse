@@ -4,29 +4,29 @@ import "../css/Home.css"; // Import the CSS file
 const Home = () => {
   const cardData = [
     {
-      imageSrc: "image1.jpg",
-      songName: "Song 1",
-      link: "/songs/1",
+      imageSrc: "https://f4.bcbits.com/img/a0363441108_5.jpg", 
+      songName: "Tití Me Preguntó",
+      link: "https://www.youtube.com/watch?v=Cr8K88UcO0s&ab_channel=BadBunny",
     },
     {
-      imageSrc: "image2.jpg",
-      songName: "Song 2",
-      link: "/songs/2",
+      imageSrc: "https://i1.sndcdn.com/artworks-XOwgFp4oSUVSuuJ9-Y02hBQ-t500x500.jpg",
+      songName: "Cruel Summer",
+      link: "https://www.youtube.com/watch?v=ic8j13piAhQ&ab_channel=TaylorSwiftVEVO",
     },
     {
-        imageSrc: "image3.jpg",
-        songName: "Song 3",
-        link: "/songs/3",
+        imageSrc: "https://i.ytimg.com/vi/PEybT27CzsY/maxresdefault.jpg",
+        songName: "Meltdown",
+        link: "https://www.youtube.com/watch?v=LuKm4L9ryB0&ab_channel=TravisScottVEVO",
       },
       {
-        imageSrc: "image4.jpg",
-        songName: "Song 4",
-        link: "/songs/4",
+        imageSrc: "https://www.billboard.com/wp-content/uploads/2022/09/Rema-Selena-Gomez-Calm-Down-2022-billboard-1548.jpg",
+        songName: "Calm Down",
+        link: "/songs/4https://www.youtube.com/watch?v=WcIcVapfqXw&ab_channel=SelenaGomezVEVO",
       },
       {
-        imageSrc: "image5.jpg",
-        songName: "Song 5",
-        link: "/songs/5",
+        imageSrc: "https://i0.wp.com/sinusoidalmusic.com/wp-content/uploads/2023/05/Web-capture_25-5-2023_233527_static.hiphopdx.com_.jpeg?fit=1497%2C843&ssl=1",
+        songName: "All My Life",
+        link: "https://www.youtube.com/watch?v=Z4N8lzKNfy4&ab_channel=LilDurk",
       },
   ];
 

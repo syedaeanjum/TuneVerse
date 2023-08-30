@@ -15,9 +15,7 @@ useEffect(() => {
       <div className="songs-list">
         {songs.map((card, index) => (
           <div key={index} className="song-card">
-            <img src={card.imageSrc} alt={card.title} />
             <h3>{card.title}</h3>
-            <a href={card.link}>Listen</a>
           </div>
         ))}
       </div>
