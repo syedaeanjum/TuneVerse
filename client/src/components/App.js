@@ -8,8 +8,6 @@ import Playlist from "./Playlist";
 import LoginPage from './LoginPage'
 import { UserContext } from "../context/user";
 
-// import "./App.css";
-
 function App() {
   const { user, setUser } = useContext(UserContext)
 

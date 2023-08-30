@@ -1,6 +1,7 @@
 .center-content {
   text-align: center;
 }
+
 .card-container {
   display: flex;
   justify-content: center; 
@@ -26,6 +27,7 @@
 
 .card h3 {
   margin: 10px 0;
+  color: black; 
 }
 
 .card a {
@@ -34,4 +36,4 @@
   color: white;
   padding: 5px 10px;
   border-radius: 4px;
-} 
+}

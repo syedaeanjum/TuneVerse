@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/Home.css"; // Import the CSS file
+import "../css/Home.css"; 
 
 const Home = () => {
   const cardData = [
@@ -31,7 +31,7 @@ const Home = () => {
   ];
 
   return (
-    <div class="center-content">
+    <div className="center-content">
       <h1>Hot Tunes Right Now!</h1>
       <div className="card-container">
         {cardData.map((card, index) => (
