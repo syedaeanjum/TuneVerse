@@ -1,6 +1,6 @@
 from flask import request, jsonify, make_response, session
 from flask_restful import Resource
-from models import Artist, Playlist, Song, User
+from models import Artist, Playlist, Song, User, PlaylistSong
 from config import app, api, db
 
 @app.route('/')
@@ -57,7 +57,7 @@ class Authenticate (Resource):
 class Songs(Resource):
     def get(self):
         songs = Song.query.all()
-        song_names= [song.to_dict() for song in songs]
+        song_names= [song.to_dict(only = ('id', 'title')) for song in songs]
     
         return make_response (song_names, 200 )
     
@@ -67,7 +67,7 @@ class SongsByID (Resource):
         song = Song.query.get(id)
         if not song:
             return make_response({'message': 'not found'}, 404 )
-        return make_response (song.to_dict(), 200 )
+        return make_response (song.to_dict(only = ('id', 'title')), 200 )
 
 class Artists(Resource):
     def get(self):
@@ -84,7 +84,7 @@ class ArtistsByID (Resource):
     
 class Playlists(Resource):
     def get(self):
-        playlists = [p.to_dict() for p in Playlist.query.all()]
+        playlists = [p.to_dict(only = ("id","name","songs.id", "songs.title","artists")) for p in Playlist.query.all()]
         
         return make_response (playlists, 200)
     
@@ -148,6 +148,35 @@ class UpdatePlaylist(Resource):
 
         db.session.commit()
         return {'message': 'Playlist updated successfully'}, 200
+
+class PlaylistSongs (Resource):
+    def post (self):
+        data = request.get_json()
+        newPs = PlaylistSong(song_id = data['song_id'], playlist_id = data ['playlist_id'])    
+        db.session.add(newPs)
+        db.session.commit()
+        return make_response (newPs.to_dict(),201)
+    
+class PlaylistWithSongs(Resource):
+    def post (self):
+        data = request.get_json()
+        playlist = Playlist(name = data ['name'])
+        db.session.add(playlist)
+        db.session.commit()
+        
+        for song_title in data['songs']: 
+            song = Song.query.filter_by(title = song_title['title']).first()
+            
+            if not song: 
+                song = Song(title = song_title['title'])
+                db.session.add(song)
+                db.session.commit()
+                
+            ps = PlaylistSong (song_id = song.id, playlist_id = playlist.id)
+            db.session.add(ps)
+            db.session.commit()
+        return make_response(playlist.to_dict(), 201)
+    
     
 
 api.add_resource(Login, '/login')
@@ -161,6 +190,9 @@ api.add_resource(ArtistsByID, '/artists/<int:id>')
 api.add_resource(Playlists, '/playlists')
 api.add_resource(PlaylistByID, '/playlists/<int:id>')
 api.add_resource(UpdatePlaylist, '/playlists/<playlist_name>/update')
+api.add_resource(PlaylistSongs, '/playlistsongs')
+api.add_resource(PlaylistWithSongs, '/playlistwithsongs')
+
 
 
 if __name__ == '__main__':

@@ -38,8 +38,8 @@ const Playlist = () => {
     e.preventDefault();
     if (playlistName.trim() !== "" && artistName.trim() !== "" && songName.trim() !== "") {
       const newSong = {
-        artist: artistName,
-        song: songName,
+        // artist: artistName,
+        title: songName,
       };
       setPlaylistSongs([...playlistSongs, newSong]);
       setArtistName("");
@@ -50,13 +50,15 @@ const Playlist = () => {
   const handlePlaylistSubmit = (e) => {
     e.preventDefault();
     if(playlistName.length <5)
-      {alert('Please enter playlist with at least 5 characters')}
+      {alert('Please enter playlist with at least 5 characters')
+      return null
+  }
     if (playlistName.trim() !== "") {
       const newPlaylist = {
         name: playlistName,
         songs: [...playlistSongs],
       };
-      fetch('/playlists', {
+      fetch('/playlistwithsongs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,8 +68,7 @@ const Playlist = () => {
         .then(r => r.json())
         .then(p => {
           console.log(p)
-          //window.confirm ('Playlist successfully created.')
-          setCreatedPlaylists([...createdPlaylists, newPlaylist]);
+          setPlaylists([...playlists, newPlaylist]);
           setPlaylistName("");
           setArtistName("");
           setSongName("");
@@ -146,20 +147,13 @@ const Playlist = () => {
             <p>{playlist.description}</p>
             {playlist.id === detailId ?
               <div>
-                <ul>
-                  {createdPlaylists.map((playlist, index) => (
-                    <li key={index}>
-                      {playlist.name}
                       <ul>
                         {playlist.songs.map((song, index) => (
                           <li key={index}>
-                            {song.artist} - {song.song}
+                            {song.title} - {song.song}
                           </li>
                         ))}
                       </ul>
-                    </li>
-                  ))}
-                </ul>
                 <button onClick={() => handleDetail('')}>
                   Less info</button>
                 <button onClick={() => deletePlaylist(playlist.id)}>
@@ -169,7 +163,6 @@ const Playlist = () => {
               :
               <button onClick={() => handleDetail(playlist.id)}> More Info </button>
             }
-
             <Link to={`/playlists/${playlist.name.toLowerCase().replace(/\s+/g, "-")}`}>
               <button>Access Playlist</button>
             </Link>
