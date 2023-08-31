@@ -20,12 +20,6 @@ const Playlist = () => {
     setDetailId(detailedPlaylist)
   }
 
-  // console.log(detailId)
-  // const premadePlaylists = [
-  //   { name: "Chill Vibes", description: "Relaxing tunes for a calm day." },
-  //   { name: "Upbeat Jams", description: "Energetic tracks to lift your spirits." },
-  // ];
-
   useEffect(() => {
     fetch('/playlists')
       .then(r => r.json())
@@ -38,7 +32,7 @@ const Playlist = () => {
     e.preventDefault();
     if (playlistName.trim() !== "" && artistName.trim() !== "" && songName.trim() !== "") {
       const newSong = {
-        // artist: artistName,
+        
         title: songName,
       };
       setPlaylistSongs([...playlistSongs, newSong]);
@@ -94,7 +88,7 @@ const Playlist = () => {
       });
 
       if (response.ok) {
-        // Update the playlist name in your playlists state
+        
         setPlaylists((prevPlaylists) =>
           prevPlaylists.map((playlist) =>
             playlist.id === playlistId ? { ...playlist, name: newPlaylistName } : playlist

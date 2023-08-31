@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; // Note the change from `Switch` to `Routes` and `Navigate`
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import NavBar from "./NavBar";
 import Home from "./Home";
 import Songs from "./Songs";

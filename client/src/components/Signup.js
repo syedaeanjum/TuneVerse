@@ -17,7 +17,7 @@ const SignupPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Prepare the data for the fetch request
+   
     const formObj = {
       username: userData.username,
       password: userData.password
@@ -32,23 +32,23 @@ const SignupPage = () => {
       if (r.ok) {
         r.json()
         .then(data => {
-          // Handle successful signup, e.g., redirect to home page
+          
           console.log(data);
         });
       } else {
         r.json()
         .then(data => {
-          // Handle signup error, e.g., display error message
+          
           console.log(data);
         });
       }
     })
     .catch(error => {
-      // Handle fetch error
+      
       console.error(error);
     });
 
-    // Reset the form
+    
     setUserData({
       username: '',
       password: ''
