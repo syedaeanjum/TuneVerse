@@ -1,59 +1,72 @@
-/* .songs-container {
-  padding: 20px;
-  color: black;
-  font-family: "Circular", Arial, sans-serif;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: black; 
+  color: #333;
 }
+.songs-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; 
+  min-height: 100vh;
+  background-color: black; 
+}
+
+
+.songs-wrapper {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto; 
+  padding-top: 100px; 
+  padding-bottom: 20px; 
+}
+
+
+.songs-wrapper h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #1db954; 
+}
+
 
 .songs-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  justify-content: center; 
+  padding: 0;
+  gap: 10px; 
+  list-style: none;
 }
+
 
 .song-card {
-  border: 1px solid #ccc;
-  padding: 15px;
-  text-align: center;
-  width: calc(33.33% - 20px);
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  font-family: "Circular", Arial, sans-serif;
-}
-
-.song-card:hover {
-  box-shadow: 0 6px 10px rgba(0, 128, 0, 0.5);
-  transform: translateY(-3px);
-  font-family: "Circular", Arial, sans-serif;
-} */
-
-.songs-container {
-  padding: 20px;
-  color: black;
-  font-family: "Circular", Arial, sans-serif;
-}
-
-.songs-list {
+  flex-basis: calc(33.33% - 10px);
   display: flex;
-  flex-direction: column; /* Change the flex direction to column */
-  gap: 20px;
-}
-
-.song-card {
-  border: 1px solid #ccc;
-  padding: 15px;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  width: 100%; /* Cards take full width */
+  padding: 20px; 
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   font-family: "Circular", Arial, sans-serif;
 }
+
 
 .song-card:hover {
-  box-shadow: 0 6px 10px rgba(0, 128, 0, 0.5);
-  transform: translateY(-3px);
-  font-family: "Circular", Arial, sans-serif;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 128, 0, 0.808); 
 }
 
 
+@media (max-width: 768px) {
+  .songs-wrapper {
+    padding: 10px;
+  }
+  
+  .song-card {
+    flex-basis: calc(50% - 10px); 
+  }
+}

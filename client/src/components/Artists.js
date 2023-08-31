@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
-import "../css/Artist.css";
+import "../css/Artist.css"; 
 
 const Artists = () => {
+  const [artists, setArtists] = useState([]);
   const [name, setName] = useState('');
   const [image, setImage] = useState('');
-  const [artists, setArtists] = useState([]);
 
   const handleArtist = async () => {
     try {
@@ -22,7 +21,7 @@ const Artists = () => {
         setName(`/artists/${data.artist_id}`);
         setImage(`/artists/${data.artist_image}`);
       } else if (response.status === 404) {
-        // Handle 404 error if needed
+        
       }
     } catch (error) {
       console.error("Error fetching artist:", error);
@@ -30,13 +29,13 @@ const Artists = () => {
   }
 
   useEffect(() => {
-    // Fetch artists data from the API endpoint
+    
     const fetchArtistsData = async () => {
       try {
         const response = await fetch('/artists');
         if (response.status === 200) {
           const data = await response.json();
-          setArtists(data); // Assuming the data is an array of artists
+          setArtists(data); 
         }
       } catch (error) {
         console.error("Error fetching artists:", error);
@@ -47,16 +46,20 @@ const Artists = () => {
 
   return (
     <div className="artists-container">
-      <h1>Artists</h1>
-      <ul>
-        {artists.map(artist => (
-          <li key={artist.id}>
+  <div className="artists-wrapper">
+    <h1>Artists</h1>
+    <ul className="artist-list">
+      {artists.map(artist => (
+        <li className="picture-item" key={artist.id}>
+          <div className="picture-container">
             <img src={artist.image} alt={artist.name} />
             <p>{artist.name}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
   );
 };
 
